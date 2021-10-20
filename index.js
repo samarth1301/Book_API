@@ -96,9 +96,6 @@ booky.get('/is/:ISBN',async(req,res)=>{
 
 
 
-
-
-
     // const arr=(database.books.filter((e)=>e.ISBN===id));
     // if(arr.length===0){
     //     return res.json({error: `No book found for the ISBN of ${id}`});
@@ -215,7 +212,7 @@ booky.get('/author',async(req,res)=>{
 //  access:    PUBLIC
 // Parameter :    Id
 // methods used : get 
-booky.get('/author/:id',async(req,res)=>{
+booky.get('/author/:id_',async(req,res)=>{
     const id_=req.params.id;
 
     const newAuthor= await AuthorModel.findOne({id:id_});
@@ -282,8 +279,8 @@ booky.get('/publications',async (req,res)=>{
 // Parameter :    id
 // methods used : get 
 
-booky.get('/publications/identity/:id',async(req,res)=>{
-    const id_=req.params.id;
+booky.get('/publications/identity/:id_',async(req,res)=>{
+    const id_=req.params.id_;
 
     const specificPublication= await PublicationModel.findOne({id:parseInt(id_)});
 
@@ -432,29 +429,29 @@ booky.post('/publication/new', async(req,res)=>{
 
 
 
-// booky.put('/publication/update/book/:isbn',(req,res)=>{
-//     //lets first update the publication databse.
-//     database.publication.forEach((e)=>{
-//         if(e.id===parseInt(req.body.pubID)){
-//             if(!e.books.includes(req.params.isbn)){
-//             return e.books.push(req.params.isbn);
-//             }
-//         }
-//     });
-//     database.books.forEach((book)=>{
-//         if(book.ISBN==req.params.isbn){
-//             if(book.publications!==parseInt(req.body.pubID)){
-//             book.publications=req.body.pubID;
-//             return;
-//         }
-//         }
-//     })
-//     return res.json({
-//         books: database.books,
-//         publications:database.publication,
-//         message:"Succesfully updated publications"
-//     })
-// });
+booky.put('/publication/update/book/:isbn',(req,res)=>{
+    //lets first update the publication databse.
+    database.publication.forEach((e)=>{
+        if(e.id===parseInt(req.body.pubID)){
+            if(!e.books.includes(req.params.isbn)){
+            return e.books.push(req.params.isbn);
+            }
+        }
+    });
+    database.books.forEach((book)=>{
+        if(book.ISBN==req.params.isbn){
+            if(book.publications!==parseInt(req.body.pubID)){
+            book.publications=req.body.pubID;
+            return;
+        }
+        }
+    })
+    return res.json({
+        books: database.books,
+        publications:database.publication,
+        message:"Succesfully updated publications"
+    })
+});
 
 
 
